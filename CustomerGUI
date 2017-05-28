@@ -1,0 +1,428 @@
+/******************************************************************************
+ * 				
+ * 							RMIT SuperMarket System GUI Temp
+ * 							Created Date: 2017.05.10
+ * 							Authored: David Zhang
+ * 							Last Edited Date: 2017.05.28
+ * 
+ ******************************************************************************/
+
+package MarketSysGUI;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import java.awt.Color;
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
+import javax.swing.JTable;
+import javax.swing.JSpinner;
+import javax.swing.JTextPane;
+import javax.swing.ListSelectionModel;
+
+
+import java.util.*;
+
+import javax.swing.JTextArea;
+import javax.swing.JList;
+
+public class CustomerGUI {
+	
+
+	
+	
+
+	private JFrame frame;
+	private JTextField input_username;
+	private JPasswordField input_password;
+	private JPanel c_panel_login;
+	private JPanel c_panel_shopCart;
+	private JButton btn_signout;
+	private JButton btn_additem;
+	private JTextField item_text_ID;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {				
+				try {
+					CustomerGUI window = new CustomerGUI();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public CustomerGUI() {
+		initialize();
+	}
+
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	
+	private void initialize() {
+		
+/****************************************************************
+ * 						
+ * 						System Database
+ * 
+ ****************************************************************/
+		
+		
+		ArrayList<Supplier> spl = new ArrayList<Supplier>();
+		ArrayList<ShoppingCart> cpl = new ArrayList<ShoppingCart>();
+		ArrayList<Customer> cul = new ArrayList<Customer>();
+		ArrayList<Warehouse> wal = new ArrayList<Warehouse>();
+		ArrayList<Sales> sal = new ArrayList<Sales>();
+		ArrayList<Product> ppl = new ArrayList<Product>();
+		ArrayList<Manager> mspl = new ArrayList<Manager>();
+		ArrayList<SalesStaff> sspl = new ArrayList<SalesStaff>();
+		ArrayList<WarehouseStaff> wspl = new ArrayList<WarehouseStaff>();
+		
+		Customer c1 = new Customer("John Kert", "c0001" , "125 therry st", 
+				1231312, 'M', "1/1/1", "jk@email.com", 10,"abcdef");
+		Customer c2 = new Customer("Peter Adam", "c0002" , "1 ann st",
+				1231312, 'M', "1/1/1", "pa@email.com", 12,"qwerty");
+		cul.add(c1);
+		cul.add(c2);
+		
+		//Supplier
+		Supplier s1 = new Supplier("s0000001", "dasd", "asdsa", "asdsa", "asdsa");
+		spl.add(s1);
+		
+		//Product
+		Product p1 = new Product(s1, "p0001", "pineapple", "U", 123, 2.6, 0.26, 5, 0.88);
+		ppl.add(p1);
+		Product p2= new Product(s1, "p0002", "orange", "U", 456, 5.1, 0.34, 5, 0.65);
+		ppl.add(p2);
+		Product p3= new Product(s1, "p0003", "apple", "U", 789, 10.4, 0.88, 5, 0.70);
+		ppl.add(p3);
+		
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		
+		
+		
+/*
+ * 
+ * 
+ */
+		frame = new JFrame();
+		frame.setBounds(100, 100, 880, 490);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(new CardLayout(0, 0));
+		
+		c_panel_login = new JPanel();
+		frame.getContentPane().add(c_panel_login, "name_176436381013536");
+		c_panel_login.setLayout(null);
+		c_panel_login.setVisible(true);
+		
+		c_panel_shopCart = new JPanel();
+		frame.getContentPane().add(c_panel_shopCart, "name_176442147356335");
+		c_panel_shopCart.setLayout(null);
+		c_panel_shopCart.setVisible(false);
+		
+		
+		//User Sign Out Function, Back to login page
+		btn_signout = new JButton("SIGNOUT");
+		btn_signout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				// flip -flop pannel in frame
+				c_panel_shopCart.setVisible(false);
+				c_panel_login.setVisible(true);
+			}
+		});
+		
+		
+		btn_signout.setBounds(728, 350, 115, 29);
+		c_panel_shopCart.add(btn_signout);
+		
+
+		
+		JLabel lblItemsPrice = new JLabel("Items ID");
+		lblItemsPrice.setBounds(632, 17, 81, 20);
+		c_panel_shopCart.add(lblItemsPrice);
+		
+		// item_ID input
+		item_text_ID = new JTextField();
+		item_text_ID.setColumns(10);
+		item_text_ID.setBounds(728, 14, 115, 26);
+		c_panel_shopCart.add(item_text_ID);
+		
+		JLabel lblshoppingDetail = new JLabel("Shopping Summary");
+		lblshoppingDetail.setBounds(51, 249, 172, 20);
+		c_panel_shopCart.add(lblshoppingDetail);
+		
+		JButton btnCallAssistent = new JButton("Assistant");
+		btnCallAssistent.setBounds(728, 305, 115, 29);
+		c_panel_shopCart.add(btnCallAssistent);
+		
+
+
+		
+		JLabel lblItemName = new JLabel("Item Name");
+		lblItemName.setBounds(49, 49, 87, 38);
+		c_panel_shopCart.add(lblItemName);
+		
+		JLabel lblItemPrice = new JLabel("Item Price");
+		lblItemPrice.setBounds(195, 49, 87, 38);
+		c_panel_shopCart.add(lblItemPrice);
+		
+		JTextPane item_textPane_name = new JTextPane();
+		item_textPane_name.setBounds(45, 88, 91, 26);
+		c_panel_shopCart.add(item_textPane_name);
+		
+		JLabel lblItemsInformationDisplay = new JLabel("Items Information Display");
+		lblItemsInformationDisplay.setBounds(49, 17, 261, 38);
+		c_panel_shopCart.add(lblItemsInformationDisplay);
+		
+		JTextPane item_textPane_price = new JTextPane();
+		item_textPane_price.setBounds(191, 88, 91, 26);
+		c_panel_shopCart.add(item_textPane_price);
+		
+		JLabel lblItemDiscount = new JLabel("Item Discount");
+		lblItemDiscount.setBounds(342, 49, 104, 38);
+		c_panel_shopCart.add(lblItemDiscount);
+		
+		JTextPane item_textPane_discount = new JTextPane();
+		item_textPane_discount.setBounds(342, 88, 104, 26);
+		c_panel_shopCart.add(item_textPane_discount);
+
+		
+		JLabel lb_welcome = new JLabel("Welcome to RMIT Supermarket System");
+		lb_welcome.setBackground(Color.WHITE);
+		lb_welcome.setForeground(Color.BLACK);
+		lb_welcome.setFont(new Font("Arial Black", Font.BOLD, 22));
+		lb_welcome.setEnabled(false);
+		lb_welcome.setBounds(173, 54, 533, 42);
+		c_panel_login.add(lb_welcome);
+		
+		JLabel lb_login = new JLabel("CUSTOMER LOGIN");
+		lb_login.setBounds(322, 130, 150, 20);
+		c_panel_login.add(lb_login);
+		
+		JLabel lb_username = new JLabel("Username");
+		lb_username.setBounds(173, 193, 95, 20);
+		c_panel_login.add(lb_username);
+		
+		JLabel lb_password = new JLabel("Password");
+		lb_password.setBounds(173, 229, 69, 20);
+		c_panel_login.add(lb_password);
+		
+		//Login Page User name and password test field input
+		input_username = new JTextField();
+		input_username.setBounds(290, 190, 206, 26);
+		c_panel_login.add(input_username);
+		input_username.setColumns(10);
+		
+		input_password = new JPasswordField();
+		input_password.setBounds(290, 226, 206, 26);
+		c_panel_login.add(input_password);
+		
+		JLabel lblItemBulkDiscount = new JLabel("Item Bulk Discount");
+		lblItemBulkDiscount.setBounds(493, 49, 148, 38);
+		c_panel_shopCart.add(lblItemBulkDiscount);
+		
+		JTextPane item_textPane_bDiscount = new JTextPane();
+		item_textPane_bDiscount.setBounds(493, 88, 148, 26);
+		c_panel_shopCart.add(item_textPane_bDiscount);
+		
+		JLabel lblQuatityNeeded = new JLabel("Quatity Needed");
+		lblQuatityNeeded.setBounds(49, 182, 127, 20);
+		c_panel_shopCart.add(lblQuatityNeeded);
+		
+		JLabel lblPurchasing = new JLabel("Items Parchasing Processing...");
+		lblPurchasing.setBounds(49, 146, 278, 20);
+		c_panel_shopCart.add(lblPurchasing);
+		
+		JTextPane item_textPane_quantity = new JTextPane();
+		item_textPane_quantity.setBounds(191, 176, 126, 26);
+		c_panel_shopCart.add(item_textPane_quantity);
+		
+		/*  JUnits
+		DefaultListModel<String> model = new DefaultListModel<>();
+		JList summary_list = new JList(model);
+		summary_list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		summary_list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		summary_list.setBounds(61, 367, 599, -81);
+		c_panel_shopCart.add(summary_list);
+		*/
+		
+		JTextArea shoppingSum_textArea = new JTextArea();
+		shoppingSum_textArea.setBounds(61, 285, 580, 133);
+		c_panel_shopCart.add(shoppingSum_textArea);
+		/**************************************************
+		 * 			
+		 * 				Login Button Action 
+		 * 
+		 **************************************************/
+		//User login verification and input 
+		JButton btn_login = new JButton("SIGN IN");
+		int cus_pos = 0;
+		btn_login.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {				
+				//loginVerify();
+				String user = input_username.getText();
+				String psd = input_password.getText();
+				//cus_pos = 3;
+				int flag = 0;
+				
+					for(int i = 0; i<cul.size();i++)
+					{
+						String c_db_password = cul.get(i).getPassword();
+						String c_db_cusNum = cul.get(i).getCustomerID();
+						
+						// Verify the custom name and password
+						if(user.equals(c_db_cusNum)&&psd.equals(c_db_password))
+						{
+							JOptionPane.showMessageDialog(frame, "Welcome to come to RMIT");
+							c_panel_login.setVisible(false);
+							c_panel_shopCart.setVisible(true);
+							flag = 1;
+							break;
+	
+						}
+						
+					}
+					if(flag==0)
+					{
+						JOptionPane.showMessageDialog(frame, "Invalid username or Password, Please try again");
+					}	
+			}
+		});
+		btn_login.setBounds(290, 299, 206, 29);
+		c_panel_login.add(btn_login);
+		
+		/**************************************************
+		 * 			Search Button Action 
+		 * 
+		 **************************************************/
+		// Shopping Cart Search Function 
+		JButton btnSearch = new JButton("Search");
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			String item_ID_get = item_text_ID.getText();
+			int flag = 0;
+			for(int i = 0; i<ppl.size();i++)
+			{
+				// IERATION FOR SEARCHING EXPECTED PRODUCT
+				String p_ID = ppl.get(i).getProductID();
+				String p_Name = ppl.get(i).getProductName();
+				String p_Price = String.valueOf(ppl.get(i).getProductPrice());
+				String p_Discount = String.valueOf(ppl.get(i).getDiscount());
+				String p_BDiscount = String.valueOf(ppl.get(i).getBulkDiscount());
+				
+				
+				// Set Name and Password 
+				if(p_ID.equals(item_ID_get))
+				{
+					
+					// DISPLAY PRODUCT INFO TO UESR
+					item_textPane_name.setText(p_Name);
+					item_textPane_price.setText(p_Price);
+					item_textPane_discount.setText(p_Discount);
+					item_textPane_bDiscount.setText(p_BDiscount);
+					flag = 1;
+					break;
+				}
+			}
+			if(flag==0)
+			{
+				JOptionPane.showMessageDialog(frame, "Item has not been found");
+			}
+			}
+		});		
+		btnSearch.setBounds(728, 49, 115, 29);
+		c_panel_shopCart.add(btnSearch);
+		/**************************************************
+		 * 			Add Button Action 
+		 * 			TO BE CONTINUE...
+		 * 
+		 **************************************************/
+		btn_additem = new JButton("Buy");
+		btn_additem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			
+				String item_ID_get = item_text_ID.getText();
+				String custom_ID_get = input_username.getText();
+				String quantity_get = item_textPane_quantity.getText();
+				int flag = 0;
+				int cus_pos = 0;
+				for(int i = 0; i<cul.size();i++)
+				{
+					// After login custom ID Must be Store in Database -> Always True
+					String custom_ID = cul.get(i).getCustomerID();
+					if(custom_ID.equals(custom_ID_get))
+					{
+						cus_pos = i;
+						break;
+					}
+				}
+				for(int i = 0; i<ppl.size();i++)
+				{
+					String p_ID = ppl.get(i).getProductID();
+					if(p_ID.equals(item_ID_get))
+					{
+						Customer c_current = cul.get(cus_pos);
+						Product p_current = ppl.get(i);
+						
+						
+						//System.out.println(cul.get(i).toString());
+						System.out.println("===================================");
+						//System.out.println(ppl.get(i).toString());
+						
+						ShoppingCart sc = new ShoppingCart(c_current,p_current,"aaa",Integer.valueOf(quantity_get));
+						cpl.add(sc);
+						System.out.println("++++++++++++");
+						shoppingSum_textArea.append(sc.guiToString());
+						//System.out.println(cpl.toString());
+						
+						break;
+					}
+				}
+				/*
+				System.out.println("==========="+cpl.size()+"++++++++++++===");
+				for(int i = 0; i<cpl.size();i++)
+				{
+					ShoppingCart sc_tmp = cpl.get(i);
+					shoppingSum_textArea.append(sc_tmp.guiToString());
+					System.out.println(sc_tmp.guiToString());
+				}
+				
+				*/
+			}
+		});
+		btn_additem.setBounds(728, 178, 104, 29);
+		c_panel_shopCart.add(btn_additem);
+		
+
+	}
+	
+}
+
+
